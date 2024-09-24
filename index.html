@@ -37,9 +37,20 @@
             margin-bottom: 20px;
             border-radius: 5px;
         }
+        #userInfo, #error {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        #error {
+            background-color: #ffeeee;
+            color: #cc0000;
+        }
     </style>
 </head>
 <body>
+    <div id="error" style="display: none;"></div>
     <div id="userInfo"></div>
     <h1>iframe Generator</h1>
     <input type="text" id="urlInput" placeholder="Enter URL">
