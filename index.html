@@ -69,27 +69,39 @@
             }
         }
 
-        // Initialize Telegram Mini App
-        window.Telegram.WebApp.ready();
-
-        // Display user information
         function displayUserInfo() {
-            const webApp = window.Telegram.WebApp;
             const userInfo = document.getElementById('userInfo');
+            const errorDiv = document.getElementById('error');
             
-            let infoHTML = '<h2>Telegram User Information:</h2>';
-            infoHTML += `<p><strong>Query ID:</strong> ${webApp.initDataUnsafe?.query_id || 'Not available'}</p>`;
-            infoHTML += `<p><strong>User ID:</strong> ${webApp.initDataUnsafe?.user?.id || 'Not available'}</p>`;
-            infoHTML += `<p><strong>Username:</strong> ${webApp.initDataUnsafe?.user?.username || 'Not available'}</p>`;
-            infoHTML += `<p><strong>First Name:</strong> ${webApp.initDataUnsafe?.user?.first_name || 'Not available'}</p>`;
-            infoHTML += `<p><strong>Last Name:</strong> ${webApp.initDataUnsafe?.user?.last_name || 'Not available'}</p>`;
-            infoHTML += `<p><strong>Language Code:</strong> ${webApp.initDataUnsafe?.user?.language_code || 'Not available'}</p>`;
-            
-            userInfo.innerHTML = infoHTML;
+            // Check if Telegram WebApp is available
+            if (window.Telegram && window.Telegram.WebApp) {
+                const webApp = window.Telegram.WebApp;
+
+                // Hide error message if it was previously shown
+                errorDiv.style.display = 'none';
+                
+                let infoHTML = '<h2>Telegram User Information:</h2>';
+                infoHTML += `<p><strong>Query ID:</strong> ${webApp.initDataUnsafe?.query_id || 'Not available'}</p>`;
+                infoHTML += `<p><strong>User ID:</strong> ${webApp.initDataUnsafe?.user?.id || 'Not available'}</p>`;
+                infoHTML += `<p><strong>Username:</strong> ${webApp.initDataUnsafe?.user?.username || 'Not available'}</p>`;
+                infoHTML += `<p><strong>First Name:</strong> ${webApp.initDataUnsafe?.user?.first_name || 'Not available'}</p>`;
+                infoHTML += `<p><strong>Last Name:</strong> ${webApp.initDataUnsafe?.user?.last_name || 'Not available'}</p>`;
+                infoHTML += `<p><strong>Language Code:</strong> ${webApp.initDataUnsafe?.user?.language_code || 'Not available'}</p>`;
+                
+                userInfo.innerHTML = infoHTML;
+
+                // Initialize Telegram Mini App
+                webApp.ready();
+            } else {
+                // Display error message if Telegram WebApp is not available
+                errorDiv.style.display = 'block';
+                errorDiv.innerHTML = '<p>Error: Telegram Web App is not available. Make sure you\'re running this in a Telegram Web App environment.</p>';
+                userInfo.innerHTML = '<p>Unable to fetch user information.</p>';
+            }
         }
 
         // Call the function to display user info when the app loads
-        displayUserInfo();
+        document.addEventListener('DOMContentLoaded', displayUserInfo);
     </script>
 </body>
 </html>
