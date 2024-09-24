@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Mini App - iframe Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/telegram-web-app/6.10.0/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        input, button {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        input {
+            width: calc(100% - 22px);
+        }
+        button {
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ccc;
+        }
+        #userInfo {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="userInfo"></div>
+    <h1>iframe Generator</h1>
+    <input type="text" id="urlInput" placeholder="Enter URL">
+    <button onclick="generateIframe()">Generate iframe</button>
+    <div id="iframeContainer"></div>
+
+    <script>
+        function generateIframe() {
+            const url = document.getElementById('urlInput').value;
+            const iframeContainer = document.getElementById('iframeContainer');
+            
+            if (url) {
+                const iframe = document.createElement('iframe');
+                iframe.src = url;
+                iframeContainer.innerHTML = '';
+                iframeContainer.appendChild(iframe);
+            } else {
+                alert('Please enter a valid URL');
+            }
+        }
+
+        // Initialize Telegram Mini App
+        window.Telegram.WebApp.ready();
+
+        // Display user information
+        function displayUserInfo() {
+            const webApp = window.Telegram.WebApp;
+            const userInfo = document.getElementById('userInfo');
+            
+            let infoHTML = '<h2>Telegram User Information:</h2>';
+            infoHTML += `<p><strong>Query ID:</strong> ${webApp.initDataUnsafe?.query_id || 'Not available'}</p>`;
+            infoHTML += `<p><strong>User ID:</strong> ${webApp.initDataUnsafe?.user?.id || 'Not available'}</p>`;
+            infoHTML += `<p><strong>Username:</strong> ${webApp.initDataUnsafe?.user?.username || 'Not available'}</p>`;
+            infoHTML += `<p><strong>First Name:</strong> ${webApp.initDataUnsafe?.user?.first_name || 'Not available'}</p>`;
+            infoHTML += `<p><strong>Last Name:</strong> ${webApp.initDataUnsafe?.user?.last_name || 'Not available'}</p>`;
+            infoHTML += `<p><strong>Language Code:</strong> ${webApp.initDataUnsafe?.user?.language_code || 'Not available'}</p>`;
+            
+            userInfo.innerHTML = infoHTML;
+        }
+
+        // Call the function to display user info when the app loads
+        displayUserInfo();
+    </script>
+</body>
+</html>
