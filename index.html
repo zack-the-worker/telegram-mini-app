@@ -66,18 +66,25 @@
 
         // Display user information
         function displayUserInfo() {
-            const webApp = window.Telegram.WebApp;
-            const userInfo = document.getElementById('userInfo');
-            
-            let infoHTML = '<h2>Telegram User Information:</h2>';
-            infoHTML += `<p><strong>Query ID:</strong> ${webApp.initDataUnsafe?.query_id || 'Not available'}</p>`;
-            infoHTML += `<p><strong>User ID:</strong> ${webApp.initDataUnsafe?.user?.id || 'Not available'}</p>`;
-            infoHTML += `<p><strong>Username:</strong> ${webApp.initDataUnsafe?.user?.username || 'Not available'}</p>`;
-            infoHTML += `<p><strong>First Name:</strong> ${webApp.initDataUnsafe?.user?.first_name || 'Not available'}</p>`;
-            infoHTML += `<p><strong>Last Name:</strong> ${webApp.initDataUnsafe?.user?.last_name || 'Not available'}</p>`;
-            infoHTML += `<p><strong>Language Code:</strong> ${webApp.initDataUnsafe?.user?.language_code || 'Not available'}</p>`;
-            
-            userInfo.innerHTML = infoHTML;
+            try {
+                const userAgent = window.navigator.userAgent;
+                const userInfo = document.getElementById('userInfo');
+                userInfo += `<p><strong>User Agent:</strong> ${userAgent}</p>`;
+                const webApp = window.Telegram.WebApp;
+                
+                let infoHTML = '<h2>Telegram User Information:</h2>';
+                infoHTML += `<p><strong>Query ID:</strong> ${webApp.initDataUnsafe?.query_id || 'Not available'}</p>`;
+                infoHTML += `<p><strong>User ID:</strong> ${webApp.initDataUnsafe?.user?.id || 'Not available'}</p>`;
+                infoHTML += `<p><strong>Username:</strong> ${webApp.initDataUnsafe?.user?.username || 'Not available'}</p>`;
+                infoHTML += `<p><strong>First Name:</strong> ${webApp.initDataUnsafe?.user?.first_name || 'Not available'}</p>`;
+                infoHTML += `<p><strong>Last Name:</strong> ${webApp.initDataUnsafe?.user?.last_name || 'Not available'}</p>`;
+                infoHTML += `<p><strong>Language Code:</strong> ${webApp.initDataUnsafe?.user?.language_code || 'Not available'}</p>`;
+                
+                userInfo.innerHTML = infoHTML;
+            }
+            catch (error) {
+                console.error('Error displaying user information:', error);
+            }
         }
 
         // Call the function to display user info when the app loads
