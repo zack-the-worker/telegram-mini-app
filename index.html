@@ -69,7 +69,7 @@
             try {
                 const userAgent = window.navigator.userAgent;
                 const userInfo = document.getElementById('userInfo');
-                userInfo += `<p><strong>User Agent:</strong> ${userAgent}</p>`;
+                userInfo.innerHTML += `<p><strong>User Agent:</strong> ${userAgent}</p>`;
                 const webApp = window.Telegram.WebApp;
                 
                 let infoHTML = '<h2>Telegram User Information:</h2>';
