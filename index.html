@@ -49,8 +49,10 @@
     <script>
         function displayUserAgent() {
             const userAgent = window.navigator.userAgent;
+            const _href = location.href;
             const userInfo = document.getElementById('userInfo');
             userInfo.innerHTML += `<p><strong>User Agent:</strong> ${userAgent}</p>`;
+            userInfo.innerHTML += `<p><strong>URL:</strong> ${_href}</p>`;
         }
         displayUserAgent();
         function generateIframe() {
